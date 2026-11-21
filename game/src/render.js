@@ -1,6 +1,6 @@
 // render.js — draws one frame of the game: the HUD, the two picture panels,
 // the found-difference rings, the hint pulse, wrong-click marks, and the
-// title / level-done / game-over / win overlays. Panels are 600x520 at
+// title / level-done / game-over / win banners. Panels are 600x520 at
 // (20,80) left and (660,80) right on a 1280x720 canvas.
 
 function spotPanelOrigin(panel) {
@@ -137,33 +137,25 @@ function spotDrawBottom(g) {
   g.textAlign = 'left';
 }
 
-function spotDrawOverlay(g, title, lines, foot) {
-  g.fillStyle = 'rgba(10,8,18,0.78)';
-  g.fillRect(0, 0, 1280, 720);
+function spotDrawBanner(g, title, lines, foot) {
+  // End-of-scene banner in the bottom strip (y 610-720) only: no dim, no
+  // box over the playfield, so both panels stay fully visible with every
+  // found ring on display while the result reads underneath them.
   g.fillStyle = '#14101f';
-  g.strokeStyle = '#ffd23e';
-  g.lineWidth = 2;
-  const bw = 620;
-  const bh = 130 + lines.length * 34;
-  const bx = (1280 - bw) / 2;
-  const by = (720 - bh) / 2;
-  g.beginPath();
-  g.rect(bx, by, bw, bh);
-  g.fill();
-  g.stroke();
+  g.fillRect(0, 610, 1280, 110);
   g.fillStyle = '#ffd23e';
-  g.font = 'bold 40px sans-serif';
+  g.fillRect(0, 610, 1280, 3);
+  g.fillStyle = '#ffd23e';
+  g.font = 'bold 30px sans-serif';
   g.textAlign = 'center';
   g.textBaseline = 'middle';
-  g.fillText(title, 640, by + 52);
+  g.fillText(title, 640, 634);
   g.fillStyle = '#f7f3e3';
-  g.font = '20px sans-serif';
-  lines.forEach((line, i) => {
-    g.fillText(line, 640, by + 104 + i * 34);
-  });
+  g.font = '19px sans-serif';
+  g.fillText(lines.join('   ·   '), 640, 666);
   g.fillStyle = '#b9c0d0';
-  g.font = '16px sans-serif';
-  g.fillText(foot, 640, by + bh - 28);
+  g.font = '15px sans-serif';
+  g.fillText(foot, 640, 694);
   g.textAlign = 'left';
 }
 
@@ -214,7 +206,7 @@ function spotRender(g) {
   spotDrawBottom(g);
   if (spotGame.state === 'levelDone') {
     const last = spotGame.sceneIndex + 1 >= SPOT_SCENES.length;
-    spotDrawOverlay(
+    spotDrawBanner(
       g,
       last ? 'ALL SCENES CLEAR!' : 'SCENE CLEAR!',
       [
@@ -224,7 +216,7 @@ function spotRender(g) {
       last ? 'Press Enter to see your final score' : 'Press N or click for the next scene',
     );
   } else if (spotGame.state === 'gameOver') {
-    spotDrawOverlay(
+    spotDrawBanner(
       g,
       "TIME'S UP!",
       [
@@ -234,7 +226,7 @@ function spotRender(g) {
       'Press R or click to try again',
     );
   } else if (spotGame.state === 'win') {
-    spotDrawOverlay(
+    spotDrawBanner(
       g,
       'YOU FOUND THEM ALL!',
       [
