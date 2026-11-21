@@ -66,6 +66,12 @@ function paintNightMarket(g, on) {
     sceneDisc(g, sx, sy, 2);
     g.fill();
   }
+  // a few more faint stars, kept clear of the moon and the centre lamp
+  g.fillStyle = 'rgba(255,248,214,0.6)';
+  for (const [sx, sy] of [[70, 14], [170, 60], [260, 18], [360, 58], [450, 16], [585, 60], [30, 120], [150, 130], [420, 130], [580, 120]]) {
+    sceneDisc(g, sx, sy, 1.5);
+    g.fill();
+  }
   // moon, top right — difference "moon": a face appears
   g.fillStyle = '#ffeebb';
   sceneDisc(g, 520, 70, 28);
@@ -109,11 +115,44 @@ function paintNightMarket(g, on) {
   g.lineWidth = 2;
   sceneDisc(g, 300, 96, 14);
   g.stroke();
+  // distant rooftops peeking over the stalls, with one lit window each
+  g.fillStyle = '#241338';
+  g.beginPath();
+  g.moveTo(0, 200);
+  g.lineTo(0, 168);
+  g.lineTo(20, 152);
+  g.lineTo(40, 168);
+  g.lineTo(40, 200);
+  g.closePath();
+  g.fill();
+  g.beginPath();
+  g.moveTo(560, 200);
+  g.lineTo(560, 166);
+  g.lineTo(580, 150);
+  g.lineTo(600, 166);
+  g.lineTo(600, 200);
+  g.closePath();
+  g.fill();
+  g.fillStyle = '#ffd23e';
+  g.fillRect(14, 172, 8, 10);
+  g.fillRect(574, 170, 8, 10);
   // ground
   g.fillStyle = '#4a2c1a';
   g.fillRect(0, 400, 600, 120);
   g.fillStyle = '#5d3a22';
   g.fillRect(0, 400, 600, 8);
+  // cobbles and a puddle catching the market light, clear of the cat's crate
+  g.strokeStyle = 'rgba(0,0,0,0.35)';
+  g.lineWidth = 2;
+  for (const [cx, cy] of [[70, 450], [140, 470], [210, 445], [280, 475], [350, 450], [100, 500], [240, 505], [380, 495]]) {
+    g.beginPath();
+    g.ellipse(cx, cy, 26, 10, 0, 0, Math.PI * 2);
+    g.stroke();
+  }
+  g.fillStyle = 'rgba(255,180,90,0.22)';
+  g.beginPath();
+  g.ellipse(300, 468, 42, 9, 0, 0, Math.PI * 2);
+  g.fill();
   // left stall — fruit, striped awning
   g.fillStyle = '#c1272d';
   g.fillRect(40, 200, 160, 26);
@@ -137,6 +176,20 @@ function paintNightMarket(g, on) {
   g.fillStyle = '#7b2fbe';
   for (const [fx, fy] of [[170, 312], [182, 306]]) {
     sceneDisc(g, fx, fy, 7);
+    g.fill();
+  }
+  // strings of dried peppers hanging on the stall front
+  g.strokeStyle = '#3d2b1a';
+  g.lineWidth = 1;
+  for (const px of [66, 84]) {
+    g.beginPath();
+    g.moveTo(px, 236);
+    g.lineTo(px, 282);
+    g.stroke();
+  }
+  g.fillStyle = '#c1272d';
+  for (const [px, py] of [[66, 252], [66, 268], [84, 258], [84, 274]]) {
+    sceneDisc(g, px, py, 5);
     g.fill();
   }
   // difference "apple": one more apple on the counter
@@ -173,6 +226,15 @@ function paintNightMarket(g, on) {
     g.fill();
   }
   sceneDisc(g, 332, 228, 9);
+  g.fill();
+  // a stack of bowls on the noodle cart counter
+  g.fillStyle = '#f7f3e3';
+  for (let i = 0; i < 3; i++) {
+    sceneDisc(g, 268, 306 - i * 8, 12 - i * 2);
+    g.fill();
+  }
+  g.fillStyle = '#2a9d8f';
+  sceneDisc(g, 268, 282, 8);
   g.fill();
   // cart sign — difference "sign": MIE reads MIA
   g.fillStyle = '#fff3c4';
@@ -220,6 +282,30 @@ function paintNightMarket(g, on) {
   g.fill();
   g.fillStyle = '#e63946';
   g.fillRect(516, 288, 28, 4);
+  // a pinwheel on a stick and a row of toy balls on the right stall
+  g.strokeStyle = '#8b5a2b';
+  g.lineWidth = 2;
+  g.beginPath();
+  g.moveTo(566, 250);
+  g.lineTo(566, 296);
+  g.stroke();
+  const pinCols = ['#e63946', '#ffd23e', '#2ec4b6', '#7b2fbe'];
+  for (let i = 0; i < 4; i++) {
+    g.fillStyle = pinCols[i];
+    g.beginPath();
+    g.moveTo(566, 250);
+    const a = (i * Math.PI) / 2;
+    g.lineTo(566 + Math.cos(a) * 11, 250 + Math.sin(a) * 11);
+    g.lineTo(566 + Math.cos(a + 0.7) * 11, 250 + Math.sin(a + 0.7) * 11);
+    g.closePath();
+    g.fill();
+  }
+  g.fillStyle = '#2a9d8f';
+  sceneDisc(g, 552, 314, 7);
+  g.fill();
+  g.fillStyle = '#ffd23e';
+  sceneDisc(g, 568, 314, 7);
+  g.fill();
   // cat on a crate — difference "cat": tail hangs down instead of up
   g.fillStyle = '#8b5a2b';
   g.fillRect(440, 420, 70, 60);
@@ -259,6 +345,26 @@ function paintNightMarket(g, on) {
   g.fill();
   sceneDisc(g, 496, 400, 2);
   g.fill();
+  // paper lanterns glowing at the panel edges
+  g.strokeStyle = '#1d1426';
+  g.lineWidth = 1;
+  g.beginPath();
+  g.moveTo(18, 120);
+  g.lineTo(18, 138);
+  g.moveTo(582, 200);
+  g.lineTo(582, 218);
+  g.stroke();
+  g.fillStyle = '#ff9a5c';
+  sceneDisc(g, 18, 150, 10);
+  g.fill();
+  g.fillStyle = '#2ec4b6';
+  sceneDisc(g, 582, 230, 10);
+  g.fill();
+  g.fillStyle = '#ffd23e';
+  sceneDisc(g, 18, 150, 4);
+  g.fill();
+  sceneDisc(g, 582, 230, 4);
+  g.fill();
 }
 
 // ---------------------------------------------------------------- scene 2
@@ -289,6 +395,16 @@ function paintHarbor(g, on) {
     sceneDisc(g, cx - 20, cy + 4, 14);
     g.fill();
   }
+  // two more small clouds drifting low over the sea
+  g.fillStyle = 'rgba(255,255,255,0.85)';
+  for (const [cx, cy] of [[60, 160], [250, 175], [500, 170]]) {
+    sceneDisc(g, cx, cy, 12);
+    g.fill();
+    sceneDisc(g, cx + 14, cy + 3, 9);
+    g.fill();
+    sceneDisc(g, cx - 14, cy + 3, 9);
+    g.fill();
+  }
   // gulls — difference "gull": one gull fewer (four become three)
   sceneGull(g, 220, 120, 1);
   sceneGull(g, 280, 100, 0.9);
@@ -305,11 +421,59 @@ function paintHarbor(g, on) {
     g.quadraticCurveTo(wx + wl / 2, wy - 8, wx + wl, wy);
     g.stroke();
   }
+  // two distant boats on the horizon and the sun's glint on the water
+  g.fillStyle = '#5d3a22';
+  for (const [bx, by] of [[185, 330], [548, 330]]) {
+    g.beginPath();
+    g.moveTo(bx, by);
+    g.lineTo(bx + 34, by);
+    g.lineTo(bx + 28, by + 8);
+    g.lineTo(bx + 6, by + 8);
+    g.closePath();
+    g.fill();
+  }
+  g.fillStyle = '#f7f3e3';
+  g.beginPath();
+  g.moveTo(200, 330);
+  g.lineTo(200, 312);
+  g.lineTo(216, 330);
+  g.closePath();
+  g.fill();
+  g.beginPath();
+  g.moveTo(562, 330);
+  g.lineTo(562, 312);
+  g.lineTo(576, 330);
+  g.closePath();
+  g.fill();
+  g.strokeStyle = 'rgba(255,210,62,0.6)';
+  g.lineWidth = 2;
+  for (const [gx, gy, gl] of [[512, 350, 26], [520, 372, 20], [508, 394, 30], [524, 416, 18]]) {
+    g.beginPath();
+    g.moveTo(gx, gy);
+    g.lineTo(gx + gl, gy);
+    g.stroke();
+  }
   // dock
   g.fillStyle = '#7a4a21';
   g.fillRect(0, 420, 260, 100);
   g.fillStyle = '#8b5a2b';
   for (let i = 0; i < 5; i++) g.fillRect(0, 436 + i * 16, 260, 3);
+  // a coiled rope and a wooden bucket on the dock
+  g.strokeStyle = '#5d3a22';
+  g.lineWidth = 3;
+  for (const [rx, ry] of [[40, 470], [232, 482]]) {
+    g.beginPath();
+    g.arc(rx, ry, 12, 0, Math.PI * 2);
+    g.stroke();
+    g.beginPath();
+    g.arc(rx, ry, 6, 0, Math.PI * 2);
+    g.stroke();
+  }
+  g.fillStyle = '#8b5a2b';
+  g.fillRect(238, 440, 18, 20);
+  g.strokeStyle = '#5d3a22';
+  g.lineWidth = 2;
+  g.strokeRect(238, 440, 18, 20);
   // crates — difference "crate": the top crate is gone
   g.fillStyle = '#b08954';
   g.fillRect(120, 380, 44, 40);
@@ -405,6 +569,23 @@ function paintHarbor(g, on) {
   g.lineTo(490, 340);
   g.closePath();
   g.fill();
+  // a small rowboat tied up near the dock, with oars shipped
+  g.fillStyle = '#7a4a21';
+  g.beginPath();
+  g.moveTo(262, 466);
+  g.lineTo(322, 466);
+  g.lineTo(312, 480);
+  g.lineTo(272, 480);
+  g.closePath();
+  g.fill();
+  g.strokeStyle = '#5d3a22';
+  g.lineWidth = 2;
+  g.beginPath();
+  g.moveTo(276, 466);
+  g.lineTo(292, 452);
+  g.moveTo(308, 466);
+  g.lineTo(296, 452);
+  g.stroke();
   // buoy — difference "buoy": yellow instead of red
   g.fillStyle = on.has('buoy') ? '#ffd23e' : '#e63946';
   sceneDisc(g, 480, 440, 14);
@@ -447,6 +628,23 @@ function paintStation(g, on) {
     sceneDisc(g, sx, sy, 2);
     g.fill();
   }
+  // a small cratered moon and two soft nebula wisps, far from the bright star
+  g.fillStyle = '#dfe6ee';
+  sceneDisc(g, 85, 65, 16);
+  g.fill();
+  g.fillStyle = '#b9c0d0';
+  sceneDisc(g, 80, 60, 4);
+  g.fill();
+  sceneDisc(g, 90, 70, 3);
+  g.fill();
+  g.fillStyle = 'rgba(123,47,190,0.16)';
+  g.beginPath();
+  g.ellipse(90, 245, 38, 16, 0.3, 0, Math.PI * 2);
+  g.fill();
+  g.fillStyle = 'rgba(46,196,182,0.14)';
+  g.beginPath();
+  g.ellipse(480, 45, 30, 14, -0.2, 0, Math.PI * 2);
+  g.fill();
   // bright star — difference "star": it is gone
   if (!on.has('star')) {
     g.fillStyle = '#fff8d6';
@@ -505,8 +703,45 @@ function paintStation(g, on) {
     g.lineTo(i * 100, 520);
     g.stroke();
   }
+  g.fillStyle = '#3d5a80';
+  for (let i = 0; i < 6; i++) {
+    sceneDisc(g, i * 100 + 50, 465, 3);
+    g.fill();
+  }
   g.fillStyle = '#232a3d';
   g.fillRect(0, 300, 600, 100);
+  // wall panel seams, a row of status LEDs and a framed star chart
+  g.strokeStyle = 'rgba(0,0,0,0.4)';
+  g.lineWidth = 1;
+  for (const wx of [50, 150, 250, 350, 450, 550]) {
+    g.beginPath();
+    g.moveTo(wx, 300);
+    g.lineTo(wx, 400);
+    g.stroke();
+  }
+  const ledCols = ['#2ec4b6', '#ffd23e', '#2ec4b6', '#e63946'];
+  for (let i = 0; i < 4; i++) {
+    g.fillStyle = ledCols[i];
+    sceneDisc(g, 330 + i * 18, 318, 4);
+    g.fill();
+  }
+  g.fillStyle = '#0e1626';
+  g.fillRect(64, 316, 52, 38);
+  g.strokeStyle = '#3d5a80';
+  g.lineWidth = 2;
+  g.strokeRect(64, 316, 52, 38);
+  g.fillStyle = '#fff8d6';
+  for (const [px, py] of [[74, 328], [90, 322], [104, 332], [82, 344], [100, 344]]) {
+    sceneDisc(g, px, py, 2);
+    g.fill();
+  }
+  g.strokeStyle = '#ffd23e';
+  g.lineWidth = 1;
+  g.beginPath();
+  g.moveTo(74, 328);
+  g.lineTo(90, 322);
+  g.lineTo(104, 332);
+  g.stroke();
   // control console — difference "light": one lamp turns red instead of green
   g.fillStyle = '#3d5a80';
   sceneRoundRect(g, 80, 360, 120, 90, 10);
@@ -522,6 +757,10 @@ function paintStation(g, on) {
   }
   g.fillStyle = '#2ec4b6';
   g.fillRect(100, 424, 80, 6);
+  g.fillStyle = '#8b93a7';
+  for (const bx of [100, 118, 136, 154]) {
+    g.fillRect(bx, 436, 12, 8);
+  }
   // cable loop — difference "cable": a second loop hangs beside the first
   g.strokeStyle = '#8b93a7';
   g.lineWidth = 4;
@@ -537,6 +776,20 @@ function paintStation(g, on) {
     g.quadraticCurveTo(310, 350, 300, 322);
     g.stroke();
   }
+  // a wrench drifting in zero-g beside the astronaut
+  g.save();
+  g.translate(385, 335);
+  g.rotate(-0.6);
+  g.fillStyle = '#b9c0d0';
+  g.fillRect(-4, -16, 8, 32);
+  g.beginPath();
+  g.arc(0, -20, 8, 0, Math.PI * 2);
+  g.fill();
+  g.fillStyle = '#1b2a4a';
+  g.beginPath();
+  g.arc(0, -20, 4, 0, Math.PI * 2);
+  g.fill();
+  g.restore();
   // astronaut — difference "visor": the visor lifts and shows a face
   g.fillStyle = '#f7f3e3';
   sceneDisc(g, 450, 300, 26);
